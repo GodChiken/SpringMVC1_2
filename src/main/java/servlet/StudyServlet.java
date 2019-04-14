@@ -1,5 +1,9 @@
 package servlet;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import service.HelloService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +21,15 @@ public class StudyServlet extends HttpServlet {
         System.out.println("init");
     }
 
+    /**
+     * 다음과 같이 컨텍스틀 꺼내올 수 있고, 그 안에 등록된 빈을 활용 할 수 있게된다.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ApplicationContext context = (ApplicationContext) getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+        HelloService helloService = context.getBean(HelloService.class);
         resp.getWriter().write("do get servlet");
+        resp.getWriter().write(helloService.getName());
     }
 
     @Override

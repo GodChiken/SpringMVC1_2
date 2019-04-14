@@ -4,4 +4,40 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <!--filter 보다 먼저 등록이 되어야 하는 xml 설정 때문에 그렇다.-->
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>config.AppConfig</param-value>
+  </context-param>
+
+  <!--filter settings-->
+  <filter>
+    <filter-name>studyFilter</filter-name>
+    <filter-class>filter.StudyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>studyFilter</filter-name>
+    <servlet-name>study</servlet-name>
+  </filter-mapping>
+
+  <!--listener settings-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!--servlet settings-->
+  <servlet>
+    <servlet-name>study</servlet-name>
+    <servlet-class>servlet.StudyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>study</servlet-name>
+    <url-pattern>/study</url-pattern>
+  </servlet-mapping>
 </web-app>
